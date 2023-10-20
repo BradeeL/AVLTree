@@ -8,6 +8,7 @@ package bal210004;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayDeque;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -27,43 +28,177 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
     Entry<T> root;
     int size;
     // define stack
+    ArrayDeque<Entry<T>> stack;
 
     public BinarySearchTree() {
         root = null;
         size = 0;
+        stack = new ArrayDeque<>();
     }
 
 
-    /** TO DO: Is x contained in tree?
+    /**
+     * TO DO: Is x contained in tree?
      */
     public boolean contains(T x) {
-        return false;
+        Entry<T> foundElement=find(root,x);
+        return foundElement!=null && x.compareTo(foundElement.element) == 0;
     }
 
 
-    /** TO DO: Add x to tree. 
-     *  If tree contains a node with same key, replace element by x.
-     *  Returns true if x is a new element added to tree.
+    /**
+     * TO DO: Add x to tree.
+     * If tree contains a node with same key, replace element by x.
+     * Returns true if x is a new element added to tree.
      */
     public boolean add(T x) {
+        Entry<T> current = root;
+        //Edge case: Tree is empty
+        if (current == null) {
+            root = new Entry<T>(x, null, null);
+            size++;
+            return true;
+        }
+        while (true) {
+            if (x.compareTo(current.element) == 0) return false;//x==current.element, element already in tree
+            if (x.compareTo(current.element) < 0) {//x<current.element, traverse left or add element
+                if (current.left == null) {
+                    current.left = new Entry<T>(x, null, null);
+                    break;
+                } else
+                    current = current.left;
+            } else { //x>current.element, traverse right or add element
+                if (current.right == null) {
+                    current.right = new Entry<T>(x, null, null);
+                    break;
+                } else
+                    current = current.right;
+            }
+        }
+        size++;
         return true;
     }
 
-    /** TO DO: Remove x from tree. 
-     *  Return x if found, otherwise return null
+    /**
+     * TO DO: Remove x from tree.
+     * Return x if found, otherwise return null
      */
     public T remove(T x) {
-        return null;
+        Entry<T> foundEntry = find(root,x);
+
+        //CASE 0: Element is not in the tree
+        if(foundEntry==null || foundEntry.element.compareTo(x)!=0) return null;
+
+        //Store parent node
+        Entry<T> parent = stack.peek();
+
+        //CASE 1: Node is a leaf node
+        if(foundEntry.left==null&&foundEntry.right==null){
+            //CASE 1a: Node has no parent (Removing root)
+            if(parent==null){
+                root=null;
+            }
+            //CASE 1b: Node is a left child
+            else if(x.compareTo(parent.element)<0){
+                parent.left=null;
+            }
+            //CASE 1c: Node is a right child
+            else if(x.compareTo(parent.element)>0){
+                parent.right=null;
+            }
+            size--;
+        }
+        //CASE 2: Node has a left child
+        else if(foundEntry.right==null){
+            //CASE 2a: Node has no parent (Removing root)
+            if(parent==null){
+                root=root.left;
+            }
+            //CASE 2b: Node is a left child
+            else if(x.compareTo(parent.element)<0){
+                parent.left=foundEntry.left;
+            }
+            //CASE 2c: Node is a right child
+            else if(x.compareTo(parent.element)>0){
+                parent.right=foundEntry.left;
+            }
+            size--;
+        }
+        //CASE 3: Node has a right child
+        else if(foundEntry.left==null){
+            //CASE 3a: Node has no parent (Removing root)
+            if(parent==null){
+                root=root.right;
+            }
+            //CASE 3b: Node is a left child
+            else if(x.compareTo(parent.element)<0){
+                parent.left=foundEntry.right;
+            }
+            //CASE 3c: Node is a right child
+            else if(x.compareTo(parent.element)>0){
+                parent.right=foundEntry.right;
+            }
+            size--;
+        }
+        //CASE 4: Node has two children
+        else{
+            //Get the in-order successor to x
+            //Attempt to find x in the right subtree of x
+            //This will give us the value closest to X in the right subtree, AKA the successor
+            Entry<T> successor=find(foundEntry.right,x);
+            //Delete the successor
+            remove(successor.element);
+            //CASE 4a: Node has no parent (Removing root)
+            if(parent==null){
+                root.element=successor.element;
+            }
+            //CASE 4b: Node is a child (Does not matter left or right)
+            else{
+                foundEntry.element=successor.element;
+            }
+            //No need to decrement size since that is done in the recursive remove call.
+        }
+
+        return x;
     }
 
+    /* attempt to find x,
+    if x is in the tree, return x.
+    else, return the value where the search failed
+    stack contains the path to x
+     */
+    private Entry<T> find(Entry<T> startingNode, T x) {
+        stack.clear();
 
- 
+        //Edge case: Tree is empty
+        if (root == null) return null;
+
+
+        Entry<T> current = startingNode;
+
+        while (current != null) {
+            if (x.compareTo(current.element) == 0) {
+                stack.push(current);
+                break;
+            }
+            else if (x.compareTo(current.element) < 0) {
+                stack.push(current);
+                current = current.left;
+            }
+            else if (x.compareTo(current.element) > 0) {
+                stack.push(current);
+                current = current.right;
+            }
+        }
+        return stack.pop();
+    }
 
 
 // Start of Optional problems
 
-    /** Optional problem : Iterate elements in sorted order of keys
-     Solve this problem without creating an array using in-order traversal (toArray()).
+    /**
+     * Optional problem : Iterate elements in sorted order of keys
+     * Solve this problem without creating an array using in-order traversal (toArray()).
      */
     public Iterator<T> iterator() {
         return null;
@@ -71,11 +206,23 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
 
     // Optional problem
     public T min() {
-        return null;
+        if (root == null) return null;
+
+        Entry<T> current = root;
+        while (current.left != null)
+            current = current.left;
+
+        return current.element;
     }
 
     public T max() {
-        return null;
+        if (root == null) return null;
+
+        Entry<T> current = root;
+        while (current.right != null)
+            current = current.right;
+
+        return current.element;
     }
 
     // Optional problem.  Find largest key that is no bigger than x.  Return null if there is no such key.
@@ -98,14 +245,15 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
         return null;
     }
 
-   // Optional: Create an array with the elements using in-order traversal of tree
+    // Optional: Create an array with the elements using in-order traversal of tree
     public Comparable[] toArray() {
         Comparable[] arr = new Comparable[size];
         /* write code to place elements in array here */
         return arr;
     }
-	
+
 // End of Optional problems
+
 
     public static void main(String[] args) throws FileNotFoundException {
         BinarySearchTree<Long> bst = new BinarySearchTree<>();
@@ -147,6 +295,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
                     break;
                 }
             }
+            bst.printTree();
         }
 
         // End Time
@@ -171,6 +320,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             printTree(node.right);
         }
     }
+
 }
 
 
