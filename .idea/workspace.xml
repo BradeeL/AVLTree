@@ -7,10 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
+    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Refactored add to allow for AVLTree inheritance">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697581526440</updated>
       <workItem from="1697581527374" duration="12435000" />
-      <workItem from="1697810255493" duration="7605000" />
+      <workItem from="1697810255493" duration="13797000" />
     </task>
     <task id="LOCAL-00001" summary="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
       <option name="closed" value="true" />
@@ -67,7 +66,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697814350093</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Refactored add to allow for AVLTree inheritance">
+      <option name="closed" value="true" />
+      <created>1697819040665</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697819040665</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -86,13 +93,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Finished BST methods Add, Contains, Remove, Find, Min, and Max" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished BST methods Add, Contains, Remove, Find, Min, and Max" />
-  </component>
-  <component name="XDebuggerManager">
-    <pin-to-top-manager>
-      <pinned-members>
-        <PinnedItemInfo parentTag="bal210004.AVLTree$Entry" memberName="right" />
-      </pinned-members>
-    </pin-to-top-manager>
+    <MESSAGE value="Refactored add to allow for AVLTree inheritance" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored add to allow for AVLTree inheritance" />
   </component>
 </project>
