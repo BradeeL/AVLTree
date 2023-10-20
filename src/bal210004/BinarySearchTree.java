@@ -51,29 +51,22 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
      * If tree contains a node with same key, replace element by x.
      * Returns true if x is a new element added to tree.
      */
-    public boolean add(T x) {
-        Entry<T> current = root;
-        //Edge case: Tree is empty
-        if (current == null) {
-            root = new Entry<T>(x, null, null);
-            size++;
-            return true;
-        }
-        while (true) {
-            if (x.compareTo(current.element) == 0) return false;//x==current.element, element already in tree
-            if (x.compareTo(current.element) < 0) {//x<current.element, traverse left or add element
-                if (current.left == null) {
-                    current.left = new Entry<T>(x, null, null);
-                    break;
-                } else
-                    current = current.left;
-            } else { //x>current.element, traverse right or add element
-                if (current.right == null) {
-                    current.right = new Entry<T>(x, null, null);
-                    break;
-                } else
-                    current = current.right;
+    public boolean add(T x){
+        return add(new Entry<>(x,null,null));
+    }
+    public boolean add(Entry<T> e) {
+        Entry<T> parent = find(root,e.element);
+        if(parent==null){
+            root=e;
+        } else {
+            if (e.element.compareTo(parent.element) == 0) {
+                parent.element = e.element;
+                return false;
             }
+            if (e.element.compareTo(parent.element) < 0)
+                parent.left = e;
+            else
+                parent.right = e;
         }
         size++;
         return true;
@@ -167,7 +160,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
     else, return the value where the search failed
     stack contains the path to x
      */
-    private Entry<T> find(Entry<T> startingNode, T x) {
+    public Entry<T> find(Entry<T> startingNode, T x) {
         stack.clear();
 
         //Edge case: Tree is empty
