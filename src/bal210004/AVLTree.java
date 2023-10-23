@@ -26,51 +26,74 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     // TO DO
     @Override
     public boolean add(T x) {
-        boolean retValue = super.add(new Entry<>(x,null,null));
-		find((Entry<T>)root,x);
-		Entry<T> current;
-		Entry<T> left;
-		Entry<T> right;
-		int leftHeight;
-		int rightHeight;
-		while(stack.peek()!=null){
-			current=(Entry<T>) stack.pop();
-			//Adjust Height
-			if(current.left!=null){
-				left=(Entry<T>) current.left;
-				leftHeight=left.height;
-			} else {
-				leftHeight=-1;
-			}
-			if(current.right!=null){
-				right=(Entry<T>) current.right;
-				rightHeight=right.height;
-			} else {
-				rightHeight=-1;
-			}
-			current.height=Math.max(leftHeight,rightHeight)+1;
+        boolean retValue = super.add(new Entry<>(x, null, null));
+        find((Entry<T>) root, x);
+        Entry<T> current;
+        Entry<T> left;
+        Entry<T> right;
 
-			//Check for imbalance, perform rotations if needed.
+        while (stack.peek() != null) {
+            current = (Entry<T>) stack.pop();
+            //Adjust Height
+            left = (Entry<T>) current.left;
+            right = (Entry<T>) current.right;
+            current.height = Math.max(left == null ? -1 : left.height, right == null ? -1 : right.height) + 1;
 
-			//TODO: Add height recalculation after rotation
+            //Check for imbalance, perform rotations if needed.
 
-			//leftHeight >=0 prevent null dereference.
-			if(leftHeight>=0) {
-				//LL Rotation
-				if (leftHeight - rightHeight > 1 && x.compareTo(current.left.element) < 0){
-					//Check if root must be updated.
-					if(stack.peek()==null){
-						root=current.left;
-					}
-					Entry<T> temp=(Entry<T>) current.left.right;
-					current.left.right=current;
-					current.left=temp;
-				}
-				//TODO: LR Rotations
-			}
-			//TODO: RR and RL Rotations
-		}
-		return retValue;
+            //TODO: Add height recalculation after rotation
+
+            //leftHeight >=0 prevent null dereference.
+            if (left != null && left.height >= 0) {
+                //LL Rotation
+                if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) < 0) {
+                    //Check if root must be updated.
+                    if (stack.peek() == null) {
+                        root = current.left;
+                    } else {
+                        //if not, update the parents child
+                        stack.peek().left = current.left;
+                    }
+                    Entry<T> temp = (Entry<T>) current.left.right;
+                    current.left.right = current;
+                    current.left = temp;
+
+                    //Height adjustment
+                    //In LL Rotation, only current's height changes
+                    current.height = Math.max(temp == null ? -1 : temp.height, right == null ? -1 : right.height) + 1;
+                }
+
+                //LR Rotation
+                else if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) > 0) {
+                    //Check if root must be updated.
+                    if (stack.peek() == null) {
+                        root = current.left.right;
+                    } else {
+                        //if not, update the parents child
+                        if (stack.peek().element.compareTo(current.element) > 0) {
+                            stack.peek().left = current.left.right;
+                        } else {
+                            stack.peek().right = current.left.right;
+                        }
+                    }
+                    Entry<T> tempLeft = (Entry<T>) current.left.right.left;
+                    Entry<T> tempRight = (Entry<T>) current.left.right.right;
+                    current.left.right.left = current.left;
+                    current.left.right.right = current;
+                    current.left.right = tempLeft;
+                    current.left = tempRight;
+
+                    //Height adjustments
+                    current = stack.peek() == null ? (Entry<T>) root.left : (Entry<T>) stack.peek().left;
+                    tempLeft = (Entry<T>) current.left;
+                    tempRight = (Entry<T>) current.right;
+                    current.height = Math.max(tempLeft == null ? -1 : tempLeft.height, tempRight == null ? -1 : tempRight.height) + 1;
+                }
+            }
+            //TODO: RR and RL Rotations
+
+        }
+        return retValue;
     }
 
     //Optional. Complete for extra credit
@@ -79,12 +102,13 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
         return super.remove(x);
     }
 
-    /** TO DO
-     *	verify if the tree is a valid AVL tree, that satisfies
-     *	all conditions of BST, and the balancing conditions of AVL trees.
-     *	In addition, do not trust the height value stored at the nodes, and
-     *	heights of nodes have to be verified to be correct.  Make your code
-     *  as efficient as possible. HINT: Look at the bottom-up solution to verify BST
+    /**
+     * TO DO
+     * verify if the tree is a valid AVL tree, that satisfies
+     * all conditions of BST, and the balancing conditions of AVL trees.
+     * In addition, do not trust the height value stored at the nodes, and
+     * heights of nodes have to be verified to be correct.  Make your code
+     * as efficient as possible. HINT: Look at the bottom-up solution to verify BST
      */
     boolean verify() {
         return false;
