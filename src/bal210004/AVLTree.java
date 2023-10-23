@@ -41,8 +41,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
 
             //Check for imbalance, perform rotations if needed.
 
-            //TODO: Add height recalculation
-
             //leftHeight >=0 prevent null dereference.
             if (left != null) {
                 //LL Rotation
@@ -83,29 +81,31 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                     current.left.right = tempLeft;
                     current.left = tempRight;
 
-                    //Height adjustments
+                    //TODO: Height adjustments
 
 
                 }
             }
-            //TODO: RR and RL Rotations
+
             if (right != null) {
                 //RR Rotation
-                if(right.height - (left==null?-1:left.height) > 1 && x.compareTo(right.element)>0){
+                if (right.height - (left == null ? -1 : left.height) > 1 && x.compareTo(right.element) > 0) {
                     //check if root should be updated
-                    if(stack.peek()==null){
-                        root=current.right;
+                    if (stack.peek() == null) {
+                        root = current.right;
                     } else {
                         //if not update parents child
-                        stack.peek().right=current.right;
+                        stack.peek().right = current.right;
                     }
                     Entry<T> temp = (Entry<T>) current.right.left;
-                    current.right.left=current;
-                    current.right=temp;
+                    current.right.left = current;
+                    current.right = temp;
 
                     //Height Adjustment
-                    current.height=Math.max(temp==null?-1:temp.height, left==null?-1:left.height)+1;
+                    current.height = Math.max(temp == null ? -1 : temp.height, left == null ? -1 : left.height) + 1;
                 }
+
+                //TODO: RL Rotations
             }
 
         }
