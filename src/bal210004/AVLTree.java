@@ -41,10 +41,10 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
 
             //Check for imbalance, perform rotations if needed.
 
-            //TODO: Add height recalculation after rotation
+            //TODO: Add height recalculation
 
             //leftHeight >=0 prevent null dereference.
-            if (left != null && left.height >= 0) {
+            if (left != null) {
                 //LL Rotation
                 if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) < 0) {
                     //Check if root must be updated.
@@ -84,13 +84,29 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                     current.left = tempRight;
 
                     //Height adjustments
-                    current = stack.peek() == null ? (Entry<T>) root.left : (Entry<T>) stack.peek().left;
-                    tempLeft = (Entry<T>) current.left;
-                    tempRight = (Entry<T>) current.right;
-                    current.height = Math.max(tempLeft == null ? -1 : tempLeft.height, tempRight == null ? -1 : tempRight.height) + 1;
+
+
                 }
             }
             //TODO: RR and RL Rotations
+            if (right != null) {
+                //RR Rotation
+                if(right.height - (left==null?-1:left.height) > 1 && x.compareTo(right.element)>0){
+                    //check if root should be updated
+                    if(stack.peek()==null){
+                        root=current.right;
+                    } else {
+                        //if not update parents child
+                        stack.peek().right=current.right;
+                    }
+                    Entry<T> temp = (Entry<T>) current.right.left;
+                    current.right.left=current;
+                    current.right=temp;
+
+                    //Height Adjustment
+                    current.height=Math.max(temp==null?-1:temp.height, left==null?-1:left.height)+1;
+                }
+            }
 
         }
         return retValue;
