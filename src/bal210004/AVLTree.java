@@ -126,8 +126,58 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
      * heights of nodes have to be verified to be correct.  Make your code
      * as efficient as possible. HINT: Look at the bottom-up solution to verify BST
      */
+    private class VerifyRetValues {
+        boolean flag;
+        int height;
+        T min;
+        T max;
+
+        public VerifyRetValues(boolean flag, int height, T min, T max) {
+            this.flag = flag;
+            this.height = height;
+            this.min = min;
+            this.max = max;
+        }
+    }
+
     boolean verify() {
-        return false;
+        if (root == null) return true;
+        VerifyRetValues validity = verify((Entry<T>) root);
+        return validity.flag && validity.height == ((Entry<T>) root).height;
+    }
+
+    //implementation of pseudocode done in assignment 6
+    VerifyRetValues verify(Entry<T> current) {
+        VerifyRetValues leftValidity = null;
+        VerifyRetValues rightValidity = null;
+        //verify left subtree
+        if (current.left != null) {
+            leftValidity = verify((Entry<T>) current.left);
+            if (!leftValidity.flag || leftValidity.max.compareTo(current.element) >= 0 || leftValidity.height != ((Entry<T>) current.left).height) {
+                return new VerifyRetValues(false, leftValidity.height, leftValidity.min, leftValidity.max);
+            }
+        }
+        //verify right subtree
+        if (current.right != null) {
+            rightValidity = verify((Entry<T>) current.right);
+            if (!rightValidity.flag || rightValidity.max.compareTo(current.element) <= 0 || rightValidity.height != ((Entry<T>) current.right).height) {
+                return new VerifyRetValues(false, rightValidity.height, rightValidity.min, rightValidity.max);
+            }
+        }
+        //verify height balance
+        if (Math.abs((leftValidity == null ? -1 : leftValidity.height) - (rightValidity == null ? -1 : rightValidity.height)) > 1) {
+            return new VerifyRetValues(false,
+                    Math.max(leftValidity == null ? -1 : leftValidity.height,
+                            rightValidity == null ? -1 : rightValidity.height) + 1,
+                    current.element,
+                    current.element);
+        }
+
+        return new VerifyRetValues(true,
+                Math.max(leftValidity == null ? -1 : leftValidity.height,
+                        rightValidity == null ? -1 : rightValidity.height) + 1,
+                current.element,
+                current.element);
     }
 }
 

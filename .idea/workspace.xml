@@ -7,7 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Added RR Rotations and RR rotation height correction">
+    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Fixed formatting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTree.java" afterDir="false" />
     </list>
@@ -56,7 +56,8 @@
       <option name="presentableId" value="Default" />
       <updated>1697581526440</updated>
       <workItem from="1697581527374" duration="12435000" />
-      <workItem from="1697810255493" duration="22422000" />
+      <workItem from="1697810255493" duration="22434000" />
+      <workItem from="1698159284754" duration="1974000" />
     </task>
     <task id="LOCAL-00001" summary="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
       <option name="closed" value="true" />
@@ -98,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698096941720</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fixed formatting">
+      <option name="closed" value="true" />
+      <created>1698097011318</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698097011318</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,7 +130,8 @@
     <MESSAGE value="Implemented LL Rotations" />
     <MESSAGE value="Refactored height calculation when adding to be simpler. &#10;Implemented height reevaluation for LL rotations and implemented LR rotations." />
     <MESSAGE value="Added RR Rotations and RR rotation height correction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added RR Rotations and RR rotation height correction" />
+    <MESSAGE value="Fixed formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed formatting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -129,7 +139,7 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java</url>
           <line>35</line>
-          <option name="timeStamp" value="31" />
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
