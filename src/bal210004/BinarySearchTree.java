@@ -288,7 +288,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
                     break;
                 }
             }
-            bst.printTree();
         }
 
         // End Time
