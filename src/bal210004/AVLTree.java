@@ -40,8 +40,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             current.height = Math.max(left == null ? -1 : left.height, right == null ? -1 : right.height) + 1;
 
             //Check for imbalance, perform rotations if needed.
-
-            //leftHeight >=0 prevent null dereference.
             if (left != null) {
                 //LL Rotation
                 if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) < 0) {
@@ -57,20 +55,22 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                             stack.peek().right = left;
                         }
                     }
-                    Entry<T> temp = (Entry<T>) current.left.right;
+                    //Height Reevaluation
+                    //In LL Rotation, only current's height changes
+                    current.height = Math.max(left.right == null ? -1 : ((Entry<T>) left.right).height, right == null ? -1 : right.height) + 1;
+
+                    Entry<T> temp = (Entry<T>) left.right;
                     current.left.right = current;
                     current.left = temp;
 
-                    //Height adjustment
-                    //In LL Rotation, only current's height changes
-                    current.height = Math.max(temp == null ? -1 : temp.height, right == null ? -1 : right.height) + 1;
+
                 }
 
                 //LR Rotation
                 else if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) > 0) {
                     //Check if root must be updated.
                     if (stack.peek() == null) {
-                        root = current.left.right;
+                        root = left.right;
                     } else {
                         //if not, update the parents child
                         if (stack.peek().element.compareTo(current.element) > 0) {
@@ -79,16 +79,20 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                             stack.peek().right = left.right;
                         }
                     }
-                    Entry<T> tempLeft = (Entry<T>) current.left.right.left;
-                    Entry<T> tempRight = (Entry<T>) current.left.right.right;
-                    current.left.right.left = current.left;
+
+                    //Height reevaluation
+                    ((Entry<T>)current.left).height=Math.max(current.left.left==null?-1:((Entry<T>)current.left.left).height,
+                            current.left.right.left==null?-1:((Entry<T>)current.left.right.left).height)+1;
+                    current.height=Math.max(right==null?-1:right.height,
+                            current.left.right.right==null?-1: ((Entry<T>) current.left.right.right).height)+1;
+                    ((Entry<T>)current.left.right).height=Math.max(current.height, ((Entry<T>) current.left).height)+1;
+
+                    Entry<T> tempLeft = (Entry<T>) left.right.left;
+                    Entry<T> tempRight = (Entry<T>) left.right.right;
+                    current.left.right.left = left;
                     current.left.right.right = current;
                     current.left.right = tempLeft;
                     current.left = tempRight;
-
-                    //TODO: Height adjustments
-
-
                 }
             }
 
@@ -106,19 +110,22 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                             stack.peek().right = right;
                         }
                     }
-                    Entry<T> temp = (Entry<T>) current.right.left;
+
+                    //Height Reevaluation
+                    current.height = Math.max(right.left == null ? -1 : ((Entry<T>)right.left).height, left == null ? -1 : left.height) + 1;
+
+                    Entry<T> temp = (Entry<T>) right.left;
                     current.right.left = current;
                     current.right = temp;
 
-                    //Height Adjustment
-                    current.height = Math.max(temp == null ? -1 : temp.height, left == null ? -1 : left.height) + 1;
+
                 }
 
-                //TODO: RL Rotations
+                //RL Rotation
                 if (right.height - (left == null ? -1 : left.height) > 1 && x.compareTo(right.element) < 0) {
                     //check if root should be updated
                     if (stack.peek() == null) {
-                        root = right;
+                        root = right.left;
                     } else {
                         //if not update parents child
                         if (stack.peek().element.compareTo(current.element) > 0) {
@@ -127,6 +134,19 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                             stack.peek().right = right.left;
                         }
                     }
+                    //Height Reevaluation
+                    current.height=Math.max(left==null?-1:left.height,
+                            current.right.left.left==null?-1:((Entry<T>)current.right.left.left).height)+1;
+                    ((Entry<T>)current.right).height=Math.max(current.right.right==null?-1:((Entry<T>)current.right.right).height,
+                            current.right.left.right==null?-1: ((Entry<T>)current.right.left.right).height)+1;
+                    ((Entry<T>)current.right.left).height=Math.max(current.height,((Entry<T>) current.right).height)+1;
+
+                    Entry<T> tempLeft=(Entry<T>) right.left.left;
+                    Entry<T> tempRight=(Entry<T>) right.left.right;
+                    current.right.left.right=right;
+                    current.right.left.left=current;
+                    current.right.left=tempRight;
+                    current.right=tempLeft;
                 }
             }
 
