@@ -7,8 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Implemented RL rotations and height reevaluation for RL and LR rotations.">
-      <change beforePath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" afterDir="false" />
+    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="removed test prints">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +48,21 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TestCase" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t04-no-remove.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -56,7 +73,7 @@
       <updated>1697581526440</updated>
       <workItem from="1697581527374" duration="12435000" />
       <workItem from="1697810255493" duration="22434000" />
-      <workItem from="1698159284754" duration="6616000" />
+      <workItem from="1698159284754" duration="13217000" />
     </task>
     <task id="LOCAL-00001" summary="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
       <option name="closed" value="true" />
@@ -130,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698173504206</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="removed test prints">
+      <option name="closed" value="true" />
+      <created>1698173935253</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1698173935253</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +182,7 @@
     <MESSAGE value="Implemented the verify method." />
     <MESSAGE value="Fixed a bug when rotating starting from a non-root node." />
     <MESSAGE value="Implemented RL rotations and height reevaluation for RL and LR rotations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented RL rotations and height reevaluation for RL and LR rotations." />
+    <MESSAGE value="removed test prints" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed test prints" />
   </component>
 </project>

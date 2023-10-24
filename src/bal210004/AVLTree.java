@@ -27,129 +27,50 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     @Override
     public boolean add(T x) {
         boolean retValue = super.add(new Entry<>(x, null, null));
-        find((Entry<T>) root, x);
+        find(root, x);
         Entry<T> current;
         Entry<T> left;
         Entry<T> right;
 
         while (stack.peek() != null) {
             current = (Entry<T>) stack.pop();
+
             //Adjust Height
-            left = (Entry<T>) current.left;
-            right = (Entry<T>) current.right;
-            current.height = Math.max(left == null ? -1 : left.height, right == null ? -1 : right.height) + 1;
+            int lHeight= current.left==null?-1: ((Entry<T>) current.left).height;
+            int rHeight= current.right==null?-1:((Entry<T>)current.right).height;
+            current.height = Math.max(lHeight,rHeight) + 1;
 
-            //Check for imbalance, perform rotations if needed.
-            if (left != null) {
-                //LL Rotation
-                if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) < 0) {
-                    //Check if root must be updated.
-                    if (stack.peek() == null) {
-                        root = left;
-                    } else {
-                        //if not, update the parents child
-                        //TODO: fix this, parents left child not necessarily the one being rotated. Same for all rotations
-                        if (stack.peek().element.compareTo(current.element) > 0) {
-                            stack.peek().left = left;
-                        } else {
-                            stack.peek().right = left;
-                        }
-                    }
-                    //Height Reevaluation
-                    //In LL Rotation, only current's height changes
-                    current.height = Math.max(left.right == null ? -1 : ((Entry<T>) left.right).height, right == null ? -1 : right.height) + 1;
+            //Check for imbalance
+            int childLHeight;
+            int childRHeight;
 
-                    Entry<T> temp = (Entry<T>) left.right;
-                    current.left.right = current;
-                    current.left = temp;
-
-
+            //L imbalance
+            if (lHeight - rHeight > 1) {
+                childLHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
+                childRHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
+                //LL rotation
+                if(childLHeight>childRHeight){
+                    LLRotate(current);
                 }
-
                 //LR Rotation
-                else if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) > 0) {
-                    //Check if root must be updated.
-                    if (stack.peek() == null) {
-                        root = left.right;
-                    } else {
-                        //if not, update the parents child
-                        if (stack.peek().element.compareTo(current.element) > 0) {
-                            stack.peek().left = left.right;
-                        } else {
-                            stack.peek().right = left.right;
-                        }
-                    }
-
-                    //Height reevaluation
-                    ((Entry<T>)current.left).height=Math.max(current.left.left==null?-1:((Entry<T>)current.left.left).height,
-                            current.left.right.left==null?-1:((Entry<T>)current.left.right.left).height)+1;
-                    current.height=Math.max(right==null?-1:right.height,
-                            current.left.right.right==null?-1: ((Entry<T>) current.left.right.right).height)+1;
-                    ((Entry<T>)current.left.right).height=Math.max(current.height, ((Entry<T>) current.left).height)+1;
-
-                    Entry<T> tempLeft = (Entry<T>) left.right.left;
-                    Entry<T> tempRight = (Entry<T>) left.right.right;
-                    current.left.right.left = left;
-                    current.left.right.right = current;
-                    current.left.right = tempLeft;
-                    current.left = tempRight;
+                else {
+                    LRRotate(current);
                 }
             }
 
-            if (right != null) {
+            //R Imbalance
+            else if(rHeight-lHeight>1){
+                childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
+                childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;
                 //RR Rotation
-                if (right.height - (left == null ? -1 : left.height) > 1 && x.compareTo(right.element) > 0) {
-                    //check if root should be updated
-                    if (stack.peek() == null) {
-                        root = right;
-                    } else {
-                        //if not update parents child
-                        if (stack.peek().element.compareTo(current.element) > 0) {
-                            stack.peek().left = right;
-                        } else {
-                            stack.peek().right = right;
-                        }
-                    }
-
-                    //Height Reevaluation
-                    current.height = Math.max(right.left == null ? -1 : ((Entry<T>)right.left).height, left == null ? -1 : left.height) + 1;
-
-                    Entry<T> temp = (Entry<T>) right.left;
-                    current.right.left = current;
-                    current.right = temp;
-
-
+                if(childRHeight>childLHeight){
+                    RRRotate(current);
                 }
-
                 //RL Rotation
-                if (right.height - (left == null ? -1 : left.height) > 1 && x.compareTo(right.element) < 0) {
-                    //check if root should be updated
-                    if (stack.peek() == null) {
-                        root = right.left;
-                    } else {
-                        //if not update parents child
-                        if (stack.peek().element.compareTo(current.element) > 0) {
-                            stack.peek().left = right.left;
-                        } else {
-                            stack.peek().right = right.left;
-                        }
-                    }
-                    //Height Reevaluation
-                    current.height=Math.max(left==null?-1:left.height,
-                            current.right.left.left==null?-1:((Entry<T>)current.right.left.left).height)+1;
-                    ((Entry<T>)current.right).height=Math.max(current.right.right==null?-1:((Entry<T>)current.right.right).height,
-                            current.right.left.right==null?-1: ((Entry<T>)current.right.left.right).height)+1;
-                    ((Entry<T>)current.right.left).height=Math.max(current.height,((Entry<T>) current.right).height)+1;
-
-                    Entry<T> tempLeft=(Entry<T>) right.left.left;
-                    Entry<T> tempRight=(Entry<T>) right.left.right;
-                    current.right.left.right=right;
-                    current.right.left.left=current;
-                    current.right.left=tempRight;
-                    current.right=tempLeft;
+                else{
+                    RLRotate(current);
                 }
             }
-
         }
         return retValue;
     }
@@ -157,7 +78,131 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     //Optional. Complete for extra credit
     @Override
     public T remove(T x) {
-        return super.remove(x);
+        T retValue = super.remove(x);
+        stack.push(find(root,x));
+        Entry<T> current;
+
+        while (stack.peek() != null) {
+            current = (Entry<T>) stack.pop();
+
+            //Adjust Height
+            int lHeight= current.left==null?-1: ((Entry<T>) current.left).height;
+            int rHeight= current.right==null?-1:((Entry<T>)current.right).height;
+            current.height = Math.max(lHeight,rHeight) + 1;
+
+            //L imbalance
+            if (lHeight - rHeight > 1) {
+                int llHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
+                int lrHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
+                //LL rotation
+                if(llHeight>lrHeight){
+                    LLRotate(current);
+                } else {
+                    LRRotate(current);
+                }
+            }
+        }
+
+        return retValue;
+    }
+
+    private void LLRotate(Entry<T> a){
+        if (stack.peek() == null) {
+            root = a.left;
+        } else {
+            //if not, update the parents child
+            if (stack.peek().element.compareTo(a.element) > 0) {
+                stack.peek().left = a.left;
+            } else {
+                stack.peek().right = a.left;
+            }
+        }
+        //Height Reevaluation
+        //In LL Rotation, only current's height changes
+        a.height = Math.max(a.left.right == null ? -1 : ((Entry<T>) a.left.right).height, a.right == null ? -1 : ((Entry<T>)a.right).height) + 1;
+
+        Entry<T> temp = (Entry<T>) a.left.right;
+        a.left.right = a;
+        a.left = temp;
+    }
+
+    private void LRRotate(Entry<T> a){
+        //Check if root must be updated.
+        if (stack.peek() == null) {
+            root = a.left.right;
+        } else {
+            //if not, update the parents child
+            if (stack.peek().element.compareTo(a.element) > 0) {
+                stack.peek().left = a.left.right;
+            } else {
+                stack.peek().right = a.left.right;
+            }
+        }
+
+        //Height reevaluation
+        a.height = Math.max(a.right == null ? -1 : ((Entry<T>)a.right).height,
+                a.left.right.right == null ? -1 : ((Entry<T>) a.left.right.right).height) + 1;
+        ((Entry<T>) a.left).height = Math.max(a.left.left == null ? -1 : ((Entry<T>) a.left.left).height,
+                a.left.right.left == null ? -1 : ((Entry<T>) a.left.right.left).height) + 1;
+        ((Entry<T>) a.left.right).height = Math.max(a.height, ((Entry<T>) a.left).height) + 1;
+
+
+        //Perform the rotation
+        Entry<T> tempLeft = (Entry<T>) a.left.right.left;
+        Entry<T> tempRight = (Entry<T>) a.left.right.right;
+        a.left.right.left = a.left;
+        a.left.right.right = a;
+        a.left.right = tempLeft;
+        a.left = tempRight;
+    }
+
+    private void RRRotate(Entry<T> a){
+        //check if root should be updated
+        if (stack.peek() == null) {
+            root = a.right;
+        } else {
+            //if not update parents child
+            if (stack.peek().element.compareTo(a.element) > 0) {
+                stack.peek().left = a.right;
+            } else {
+                stack.peek().right = a.right;
+            }
+        }
+
+        //Height Reevaluation
+        a.height = Math.max(a.right.left == null ? -1 : ((Entry<T>) a.right.left).height,
+                a.left == null ? -1 : ((Entry<T>)a.left).height) + 1;
+
+        Entry<T> temp = (Entry<T>) a.right.left;
+        a.right.left = a;
+        a.right = temp;
+    }
+
+    private void RLRotate(Entry<T> a){
+        //check if root should be updated
+        if (stack.peek() == null) {
+            root = a.right.left;
+        } else {
+            //if not update parents child
+            if (stack.peek().element.compareTo(a.element) > 0) {
+                stack.peek().left = a.right.left;
+            } else {
+                stack.peek().right = a.right.left;
+            }
+        }
+        //Height Reevaluation
+        a.height = Math.max(a.left == null ? -1 : ((Entry<T>)a.left).height,
+                a.right.left.left == null ? -1 : ((Entry<T>) a.right.left.left).height) + 1;
+        ((Entry<T>) a.right).height = Math.max(a.right.right == null ? -1 : ((Entry<T>) a.right.right).height,
+                a.right.left.right == null ? -1 : ((Entry<T>) a.right.left.right).height) + 1;
+        ((Entry<T>) a.right.left).height = Math.max(a.height, ((Entry<T>) a.right).height) + 1;
+
+        Entry<T> tempLeft = (Entry<T>) a.right.left.left;
+        Entry<T> tempRight = (Entry<T>) a.right.left.right;
+        a.right.left.right = a.right;
+        a.right.left.left = a;
+        a.right.left = tempRight;
+        a.right = tempLeft;
     }
 
     /**
