@@ -99,7 +99,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             else if(x.compareTo(parent.element)>0){
                 parent.right=null;
             }
-            size--;
         }
         //CASE 2: Node has a left child
         else if(foundEntry.right==null){
@@ -115,7 +114,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             else if(x.compareTo(parent.element)>0){
                 parent.right=foundEntry.left;
             }
-            size--;
         }
         //CASE 3: Node has a right child
         else if(foundEntry.left==null){
@@ -131,7 +129,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             else if(x.compareTo(parent.element)>0){
                 parent.right=foundEntry.right;
             }
-            size--;
         }
         //CASE 4: Node has two children
         else{
@@ -139,8 +136,15 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             //Attempt to find x in the right subtree of x
             //This will give us the value closest to X in the right subtree, AKA the successor
             Entry<T> successor=find(foundEntry.right,x);
-            //Delete the successor
-            remove(successor.element);
+
+            //Successor is immediate right child of current
+            if(stack.peek()==null){
+                foundEntry.right=successor.right;
+            } else {
+                //Successor must be a left child
+                stack.peek().left=successor.right;
+            }
+
             //CASE 4a: Node has no parent (Removing root)
             if(parent==null){
                 root.element=successor.element;
@@ -151,7 +155,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             }
             //No need to decrement size since that is done in the recursive remove call.
         }
-
+        size--;
         return x;
     }
 

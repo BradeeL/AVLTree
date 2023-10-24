@@ -40,7 +40,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             int rHeight= current.right==null?-1:((Entry<T>)current.right).height;
             current.height = Math.max(lHeight,rHeight) + 1;
 
-            //Check for imbalance
+            //Check for imbalances
             int childLHeight;
             int childRHeight;
 
@@ -80,7 +80,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     public T remove(T x) {
         T retValue = super.remove(x);
         stack.push(find(root,x));
-        Entry<T> current;
+        Entry<T> current=null;
+
 
         while (stack.peek() != null) {
             current = (Entry<T>) stack.pop();
@@ -90,19 +91,39 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             int rHeight= current.right==null?-1:((Entry<T>)current.right).height;
             current.height = Math.max(lHeight,rHeight) + 1;
 
+            //Check for imbalances
+            int childLHeight;
+            int childRHeight;
+
             //L imbalance
             if (lHeight - rHeight > 1) {
-                int llHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
-                int lrHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
-                //LL rotation
-                if(llHeight>lrHeight){
+                childLHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
+                childRHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
+                //LL Rotation
+                if(childLHeight>childRHeight){
                     LLRotate(current);
-                } else {
+                }
+                //LR Rotation
+                else {
                     LRRotate(current);
                 }
             }
-        }
+            //R Imbalance
+            else if(rHeight-lHeight>1){
+                childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
+                childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;
+                //RR Rotation
+                if(childRHeight>childLHeight){
+                    RRRotate(current);
+                }
+                //RL Rotation
+                else{
+                    RLRotate(current);
+                }
+            }
 
+
+        }
         return retValue;
     }
 
