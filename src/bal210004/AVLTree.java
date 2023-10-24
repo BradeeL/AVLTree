@@ -47,10 +47,15 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                 if (left.height - (right == null ? -1 : right.height) > 1 && x.compareTo(current.left.element) < 0) {
                     //Check if root must be updated.
                     if (stack.peek() == null) {
-                        root = current.left;
+                        root = left;
                     } else {
                         //if not, update the parents child
-                        stack.peek().left = current.left;
+                        //TODO: fix this, parents left child not necessarily the one being rotated. Same for all rotations
+                        if (stack.peek().element.compareTo(current.element) > 0) {
+                            stack.peek().left = left;
+                        } else {
+                            stack.peek().right = left;
+                        }
                     }
                     Entry<T> temp = (Entry<T>) current.left.right;
                     current.left.right = current;
@@ -69,9 +74,9 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                     } else {
                         //if not, update the parents child
                         if (stack.peek().element.compareTo(current.element) > 0) {
-                            stack.peek().left = current.left.right;
+                            stack.peek().left = left.right;
                         } else {
-                            stack.peek().right = current.left.right;
+                            stack.peek().right = left.right;
                         }
                     }
                     Entry<T> tempLeft = (Entry<T>) current.left.right.left;
@@ -92,10 +97,14 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                 if (right.height - (left == null ? -1 : left.height) > 1 && x.compareTo(right.element) > 0) {
                     //check if root should be updated
                     if (stack.peek() == null) {
-                        root = current.right;
+                        root = right;
                     } else {
                         //if not update parents child
-                        stack.peek().right = current.right;
+                        if (stack.peek().element.compareTo(current.element) > 0) {
+                            stack.peek().left = right;
+                        } else {
+                            stack.peek().right = right;
+                        }
                     }
                     Entry<T> temp = (Entry<T>) current.right.left;
                     current.right.left = current;
@@ -106,6 +115,19 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                 }
 
                 //TODO: RL Rotations
+                if (right.height - (left == null ? -1 : left.height) > 1 && x.compareTo(right.element) < 0) {
+                    //check if root should be updated
+                    if (stack.peek() == null) {
+                        root = right;
+                    } else {
+                        //if not update parents child
+                        if (stack.peek().element.compareTo(current.element) > 0) {
+                            stack.peek().left = right.left;
+                        } else {
+                            stack.peek().right = right.left;
+                        }
+                    }
+                }
             }
 
         }
@@ -126,6 +148,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
      * heights of nodes have to be verified to be correct.  Make your code
      * as efficient as possible. HINT: Look at the bottom-up solution to verify BST
      */
+
+    //Struct to return multiple values in verify function
     private class VerifyRetValues {
         boolean flag;
         int height;
