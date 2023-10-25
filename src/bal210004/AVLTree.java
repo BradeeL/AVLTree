@@ -78,7 +78,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     }
 
     //Optional. Complete for extra credit
-    //TODO: This does not fully work
+    //TODO: I was unable to get this working :(
     @Override
     public T remove(T x) {
         T retValue = super.remove(x);
@@ -110,7 +110,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                 }
             }
             //R Imbalance
-            //TODO: Weird stuff going on with rl and rr rotations. Need to double check the pointer reassignments
             else if(rHeight-lHeight>1){
                 childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
                 childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;

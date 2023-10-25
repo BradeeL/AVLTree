@@ -7,11 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Refactored remove in bst">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Backup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,9 +53,9 @@
   </component>
   <component name="RunManager">
     <configuration name="TestCase" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
+      <option name="MAIN_CLASS_NAME" value="bal210004.BinarySearchTree" />
       <module name="Project2" />
-      <option name="PROGRAM_PARAMETERS" value="bst-t02.txt" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t03.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -74,7 +71,7 @@
       <updated>1697581526440</updated>
       <workItem from="1697581527374" duration="12435000" />
       <workItem from="1697810255493" duration="22434000" />
-      <workItem from="1698159284754" duration="29689000" />
+      <workItem from="1698159284754" duration="30738000" />
     </task>
     <task id="LOCAL-00001" summary="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
       <option name="closed" value="true" />
@@ -172,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698189382809</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Backup">
+      <option name="closed" value="true" />
+      <created>1698262507420</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1698262507420</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,7 +207,8 @@
     <MESSAGE value="removed test prints" />
     <MESSAGE value="Refactored rotation code" />
     <MESSAGE value="Refactored remove in bst" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored remove in bst" />
+    <MESSAGE value="Backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
