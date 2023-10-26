@@ -37,7 +37,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
         find(root, x);
         Entry<T> current;
 
-
         while (stack.peek() != null) {
             current = (Entry<T>) stack.pop();
 
