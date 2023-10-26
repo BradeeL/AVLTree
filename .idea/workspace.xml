@@ -7,10 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Backup">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Refactored Rotation functions to be more readable">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/BinarySearchTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +55,32 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AVLTest">
-    <configuration name="AVLTest" type="Application" factoryName="Application">
+  <component name="RunManager" selected="Application.AVLTest1">
+    <configuration name="AVLTest1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t01.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AVLTest2" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t02.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AVLTest3" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t03.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AVLTest4" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
       <module name="Project2" />
       <option name="PROGRAM_PARAMETERS" value="bst-t04-no-remove.txt" />
@@ -63,7 +88,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BSTTest" type="Application" factoryName="Application">
+    <configuration name="AVLTest5" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t05-no-remove.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BSTTest1" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.BinarySearchTree" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t01.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BSTTest2" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.BinarySearchTree" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t02.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BSTTest3" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="bal210004.BinarySearchTree" />
       <module name="Project2" />
       <option name="PROGRAM_PARAMETERS" value="bst-t03.txt" />
@@ -71,9 +120,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BSTTest4" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.BinarySearchTree" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t04-no-remove.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BSTTest5" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="bal210004.BinarySearchTree" />
+      <module name="Project2" />
+      <option name="PROGRAM_PARAMETERS" value="bst-t05-no-remove.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="Application.AVLTest" />
-      <item itemvalue="Application.BSTTest" />
+      <item itemvalue="Application.AVLTest1" />
+      <item itemvalue="Application.AVLTest2" />
+      <item itemvalue="Application.AVLTest3" />
+      <item itemvalue="Application.AVLTest4" />
+      <item itemvalue="Application.AVLTest5" />
+      <item itemvalue="Application.BSTTest1" />
+      <item itemvalue="Application.BSTTest2" />
+      <item itemvalue="Application.BSTTest3" />
+      <item itemvalue="Application.BSTTest4" />
+      <item itemvalue="Application.BSTTest5" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -87,7 +160,7 @@
       <workItem from="1697581527374" duration="12435000" />
       <workItem from="1697810255493" duration="22434000" />
       <workItem from="1698159284754" duration="30738000" />
-      <workItem from="1698276766774" duration="7595000" />
+      <workItem from="1698276766774" duration="9382000" />
     </task>
     <task id="LOCAL-00001" summary="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
       <option name="closed" value="true" />
@@ -193,7 +266,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698262507420</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Refactored Rotation functions to be more readable">
+      <option name="closed" value="true" />
+      <created>1698284489214</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1698284489214</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,20 +305,36 @@
     <MESSAGE value="Refactored rotation code" />
     <MESSAGE value="Refactored remove in bst" />
     <MESSAGE value="Backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Backup" />
+    <MESSAGE value="Refactored Rotation functions to be more readable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored Rotation functions to be more readable" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/bal210004/BinarySearchTree.java</url>
-          <line>299</line>
+          <line>297</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/bal210004/AVLTree.java</url>
+          <line>270</line>
+          <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/bal210004/AVLTree.java</url>
+          <line>279</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/bal210004/AVLTree.java</url>
+          <line>284</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="73" />
+          <line>43</line>
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

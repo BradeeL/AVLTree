@@ -40,6 +40,9 @@ public class AVLTreeDriver {
 				}
 				case "Remove": {
 					operand = sc.nextLong();
+					if(operand==176){
+						int x=0;
+					}
 					if (avlTree.remove(operand) != null) {
 						result = (result + 1) % modValue;
 						if(VERIFY && !avlTree.verify())

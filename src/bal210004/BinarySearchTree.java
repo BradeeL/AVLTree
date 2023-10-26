@@ -135,9 +135,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Iterab
             //Get the in-order successor to x
             //Attempt to find x in the right subtree of x
             //This will give us the value closest to X in the right subtree, AKA the successor
-            ArrayDeque<Entry<T>> tempStack= stack;
             Entry<T> successor = find(foundEntry.right, x);
-            stack=tempStack;
 
 
             //Successor is immediate right child of current

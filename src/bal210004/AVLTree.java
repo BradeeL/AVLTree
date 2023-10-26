@@ -48,15 +48,11 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             current.height = Math.max(lHeight,rHeight) + 1;
 
             //Check for imbalances
-            int childLHeight;
-            int childRHeight;
 
             //L imbalance
             if (lHeight - rHeight > 1) {
-                childLHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
-                childRHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
                 //LL Imbalance, Rotate right
-                if(childLHeight>childRHeight){
+                if(getHeight(current.left.left)>getHeight(current.left.right)){
                     LLRotate(current);
                 }
                 //LR Imbalance, Rotate left child to the left, then rotate right
@@ -67,10 +63,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
 
             //R Imbalance
             else if(rHeight-lHeight>1){
-                childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
-                childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;
                 //RR Imbalance, Rotate left
-                if(childRHeight>childLHeight){
+                if(getHeight(current.right.right)>getHeight(current.right.left)){
                     RRRotate(current);
                 }
                 //RL Imbalance, Rotate right child to the right, then rotate left.
@@ -88,7 +82,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     public T remove(T x) {
         T retValue = super.remove(x);
 
-        //Remove failed
         if(retValue==null){
             return null;
         }
@@ -98,20 +91,14 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             current = (Entry<T>) stack.pop();
 
             //Adjust Height
-            int lHeight= current.left==null?-1: ((Entry<T>) current.left).height;
-            int rHeight= current.right==null?-1:((Entry<T>) current.right).height;
+            int lHeight= getHeight(current.left);
+            int rHeight= getHeight(current.right);
             current.height = Math.max(lHeight,rHeight) + 1;
-
-            //Check for imbalances
-            int childLHeight;
-            int childRHeight;
 
             //L imbalance
             if (lHeight - rHeight > 1) {
-                childLHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
-                childRHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
                 //LL Rotation
-                if(childLHeight>childRHeight){
+                if(getHeight(current.left.left)>=getHeight(current.left.right)){
                     LLRotate(current);
                 }
                 //LR Rotation
@@ -121,14 +108,12 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             }
             //R Imbalance
             else if(rHeight-lHeight>1){
-                childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
-                childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;
-                //RR rotate
-                if(childRHeight>childLHeight){
+                //RR Rotation
+                if(getHeight(current.right.right)>=getHeight(current.right.left)){
                     RRRotate(current);
                 }
                 //RL Rotation
-                else{
+                else {
                     RLRotate(current);
                 }
             }
