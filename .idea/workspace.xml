@@ -7,7 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Refactored Rotation functions to be more readable">
+    <list default="true" id="3a8d4d8e-ebb5-4114-af03-370849e0c99a" name="Changes" comment="Fixed AVL remove, ready to submit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java" afterDir="false" />
@@ -55,7 +55,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AVLTest1">
+  <component name="RunManager" selected="Application.AVLTest3">
     <configuration name="AVLTest1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="bal210004.AVLTreeDriver" />
       <module name="Project2" />
@@ -160,7 +160,7 @@
       <workItem from="1697581527374" duration="12435000" />
       <workItem from="1697810255493" duration="22434000" />
       <workItem from="1698159284754" duration="30738000" />
-      <workItem from="1698276766774" duration="9382000" />
+      <workItem from="1698276766774" duration="12768000" />
     </task>
     <task id="LOCAL-00001" summary="Finished BST methods Add, Contains, Remove, Find, Min, and Max">
       <option name="closed" value="true" />
@@ -274,7 +274,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698284489214</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Refactored height calc">
+      <option name="closed" value="true" />
+      <created>1698286281288</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1698286281288</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,38 +314,11 @@
     <MESSAGE value="Refactored remove in bst" />
     <MESSAGE value="Backup" />
     <MESSAGE value="Refactored Rotation functions to be more readable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored Rotation functions to be more readable" />
+    <MESSAGE value="Refactored height calc" />
+    <MESSAGE value="Fixed AVL remove, ready to submit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed AVL remove, ready to submit" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/bal210004/BinarySearchTree.java</url>
-          <line>297</line>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/bal210004/AVLTree.java</url>
-          <line>270</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/bal210004/AVLTree.java</url>
-          <line>279</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/bal210004/AVLTree.java</url>
-          <line>284</line>
-          <option name="timeStamp" value="76" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/bal210004/AVLTreeDriver.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="bal210004.AVLTree" memberName="lastRotation" />

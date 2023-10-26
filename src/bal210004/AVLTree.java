@@ -36,8 +36,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
         }
         find(root, x);
         Entry<T> current;
-        Entry<T> left;
-        Entry<T> right;
+
 
         while (stack.peek() != null) {
             current = (Entry<T>) stack.pop();
@@ -77,7 +76,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     }
 
     //Optional. Complete for extra credit
-    //TODO: I was unable to get this working :(
     @Override
     public T remove(T x) {
         T retValue = super.remove(x);
