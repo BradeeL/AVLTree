@@ -6,6 +6,7 @@
 // replace package name with your netid
 package bal210004;
 
+import java.nio.file.attribute.AclEntryType;
 import java.util.ArrayDeque;
 import java.util.Comparator;
 
@@ -29,6 +30,10 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     @Override
     public boolean add(T x) {
         boolean retValue = super.add(new Entry<>(x, null, null));
+        //Add failed
+        if(!retValue){
+            return false;
+        }
         find(root, x);
         Entry<T> current;
         Entry<T> left;
@@ -38,8 +43,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             current = (Entry<T>) stack.pop();
 
             //Adjust Height
-            int lHeight= current.left==null?-1: ((Entry<T>) current.left).height;
-            int rHeight= current.right==null?-1:((Entry<T>)current.right).height;
+            int lHeight= getHeight(current.left);
+            int rHeight= getHeight(current.right);
             current.height = Math.max(lHeight,rHeight) + 1;
 
             //Check for imbalances
@@ -50,11 +55,11 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             if (lHeight - rHeight > 1) {
                 childLHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
                 childRHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
-                //LL rotation
+                //LL Imbalance, Rotate right
                 if(childLHeight>childRHeight){
                     LLRotate(current);
                 }
-                //LR Rotation
+                //LR Imbalance, Rotate left child to the left, then rotate right
                 else {
                     LRRotate(current);
                 }
@@ -64,11 +69,11 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             else if(rHeight-lHeight>1){
                 childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
                 childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;
-                //RR Rotation
+                //RR Imbalance, Rotate left
                 if(childRHeight>childLHeight){
                     RRRotate(current);
                 }
-                //RL Rotation
+                //RL Imbalance, Rotate right child to the right, then rotate left.
                 else{
                     RLRotate(current);
                 }
@@ -82,6 +87,11 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     @Override
     public T remove(T x) {
         T retValue = super.remove(x);
+
+        //Remove failed
+        if(retValue==null){
+            return null;
+        }
         Entry<T> current;
 
         while (stack.peek() != null) {
@@ -101,7 +111,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
                 childLHeight=current.left.left==null?-1:((Entry<T>)current.left.left).height;
                 childRHeight=current.left.right==null?-1:((Entry<T>)current.left.right).height;
                 //LL Rotation
-                if(childLHeight>=childRHeight){
+                if(childLHeight>childRHeight){
                     LLRotate(current);
                 }
                 //LR Rotation
@@ -113,122 +123,119 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
             else if(rHeight-lHeight>1){
                 childLHeight=current.right.left==null?-1:((Entry<T>)current.right.left).height;
                 childRHeight=current.right.right==null?-1:((Entry<T>)current.right.right).height;
-                //RR Rotation
-                if(childRHeight>=childLHeight){
+                //RR rotate
+                if(childRHeight>childLHeight){
                     RRRotate(current);
                 }
                 //RL Rotation
                 else{
                     RLRotate(current);
                 }
-
             }
-
-
-
         }
         return retValue;
     }
 
     private void LLRotate(Entry<T> a){
+        Entry<T> b=(Entry<T>) a.left;
+        //Should root be updated?
         if (stack.peek() == null) {
-            root = a.left;
+            root = b;
         } else {
             //if not, update the parents child
             if (stack.peek().element.compareTo(a.element) > 0) {
-                stack.peek().left = a.left;
+                stack.peek().left = b;
             } else {
-                stack.peek().right = a.left;
+                stack.peek().right = b;
             }
         }
-        //Height Reevaluation
-        a.height = Math.max(a.left.right == null ? -1 : ((Entry<T>) a.left.right).height, a.right == null ? -1 : ((Entry<T>)a.right).height) + 1;
-        ((Entry<T>)a.left).height=Math.max(a.height,a.left.left==null?-1:((Entry<T>)a.left.left).height) + 1;
+        a.left=b.right;
+        b.right=a;
 
-        Entry<T> temp = (Entry<T>) a.left.right;
-        a.left.right = a;
-        a.left = temp;
-    }
-
-    private void LRRotate(Entry<T> a){
-        //Check if root must be updated.
-        if (stack.peek() == null) {
-            root = a.left.right;
-        } else {
-            //if not, update the parents child
-            if (stack.peek().element.compareTo(a.element) > 0) {
-                stack.peek().left = a.left.right;
-            } else {
-                stack.peek().right = a.left.right;
-            }
-        }
-
-        //Height reevaluation
-        a.height = Math.max(a.right == null ? -1 : ((Entry<T>)a.right).height,
-                a.left.right.right == null ? -1 : ((Entry<T>) a.left.right.right).height) + 1;
-        ((Entry<T>) a.left).height = Math.max(a.left.left == null ? -1 : ((Entry<T>) a.left.left).height,
-                a.left.right.left == null ? -1 : ((Entry<T>) a.left.right.left).height) + 1;
-        ((Entry<T>) a.left.right).height = Math.max(a.height, ((Entry<T>) a.left).height) + 1;
-
-
-        //Perform the rotation
-        Entry<T> tempLeft = (Entry<T>) a.left.right.left;
-        Entry<T> tempRight = (Entry<T>) a.left.right.right;
-        a.left.right.left = a.left;
-        a.left.right.right = a;
-        a.left.right = tempLeft;
-        a.left = tempRight;
+        a.height=Math.max(getHeight(a.right),getHeight(a.left))+1;
+        b.height=Math.max(getHeight(b.left),getHeight(b.right))+1;
     }
 
     private void RRRotate(Entry<T> a){
-        //check if root should be updated
-        if (stack.peek() == null) {
-            root = a.right;
+        Entry<T> b=(Entry<T>) a.right;
+        //Should root be updated?
+        if(stack.peek()==null){
+            root=b;
         } else {
-            //if not update parents child
-            if (stack.peek().element.compareTo(a.element) > 0) {
-                stack.peek().left = a.right;
+            //if not, update the parents child
+            if(stack.peek().element.compareTo(a.element)>0){
+                stack.peek().left=b;
             } else {
-                stack.peek().right = a.right;
+                stack.peek().right=b;
             }
         }
 
-        //Height Reevaluation
-        a.height = Math.max(a.right.left == null ? -1 : ((Entry<T>) a.right.left).height,
-                a.left == null ? -1 : ((Entry<T>)a.left).height) + 1;
-        ((Entry<T>)a.right).height=Math.max(a.height,a.right.right==null?-1:
-                ((Entry<T>)a.right.right).height)+1;
+        a.right=b.left;
+        b.left=a;
 
-        Entry<T> temp = (Entry<T>) a.right.left;
-        a.right.left = a;
-        a.right = temp;
+        //Re-evaluate heights
+        a.height=Math.max(getHeight(a.right),getHeight(a.left))+1;
+        b.height=Math.max(getHeight(b.left),getHeight(b.right))+1;
+    }
+
+    private void LRRotate(Entry<T> a){
+        Entry<T> b=(Entry<T>) a.left;
+        Entry<T> c=(Entry<T>) b.right;
+
+        //Should root be updated?
+        if(stack.peek()==null){
+            root=c;
+        } else {
+            //if not, update the parents child
+            if(stack.peek().element.compareTo(a.element)>0){
+                stack.peek().left=c;
+            } else {
+                stack.peek().right=c;
+            }
+        }
+
+        b.right=c.left;
+        a.left=c.right;
+        c.left=b;
+        c.right=a;
+
+        a.height=Math.max(getHeight(a.left),getHeight(a.right))+1;
+        b.height=Math.max(getHeight(b.left),getHeight(b.right))+1;
+        c.height=Math.max(getHeight(c.left),getHeight(c.right))+1;
     }
 
     private void RLRotate(Entry<T> a){
-        //check if root should be updated
-        if (stack.peek() == null) {
-            root = a.right.left;
+        Entry<T> b=(Entry<T>) a.right;
+        Entry<T> c=(Entry<T>) b.left;
+
+        //Should root be updated?
+        if(stack.peek()==null){
+            root=c;
         } else {
-            //if not update parents child
-            if (stack.peek().element.compareTo(a.element) > 0) {
-                stack.peek().left = a.right.left;
+            //if not, update the parents child
+            if(stack.peek().element.compareTo(a.element)>0){
+                stack.peek().left=c;
             } else {
-                stack.peek().right = a.right.left;
+                stack.peek().right=c;
             }
         }
-        //Height Reevaluation
-        a.height = Math.max(a.left == null ? -1 : ((Entry<T>)a.left).height,
-                a.right.left.left == null ? -1 : ((Entry<T>) a.right.left.left).height) + 1;
-        ((Entry<T>) a.right).height = Math.max(a.right.right == null ? -1 : ((Entry<T>) a.right.right).height,
-                a.right.left.right == null ? -1 : ((Entry<T>) a.right.left.right).height) + 1;
-        ((Entry<T>) a.right.left).height = Math.max(a.height, ((Entry<T>) a.right).height) + 1;
 
-        Entry<T> tempLeft = (Entry<T>) a.right.left.left;
-        Entry<T> tempRight = (Entry<T>) a.right.left.right;
-        a.right.left.right = a.right;
-        a.right.left.left = a;
-        a.right.left = tempRight;
-        a.right = tempLeft;
+        a.right=c.left;
+        b.left=c.right;
+        c.left=a;
+        c.right=b;
+
+        a.height=Math.max(getHeight(a.left),getHeight(a.right))+1;
+        b.height=Math.max(getHeight(b.left),getHeight(b.right))+1;
+        c.height=Math.max(getHeight(c.left),getHeight(c.right))+1;
+    }
+
+
+    private int getHeight(BinarySearchTree.Entry<T> entry){
+        if(entry==null){
+            return -1;
+        }
+        return ((Entry<T>) entry).height;
     }
 
     /**
@@ -265,9 +272,16 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
     VerifyRetValues verify(Entry<T> current) {
         VerifyRetValues leftValidity = null;
         VerifyRetValues rightValidity = null;
+
+        int lHeight=-1;
+        int rHeight=-1;
+
+        T lmin=current.element,rmax=current.element;
         //verify left subtree
         if (current.left != null) {
             leftValidity = verify((Entry<T>) current.left);
+            lmin=leftValidity.min;
+            lHeight= leftValidity.height;
             if (!leftValidity.flag || leftValidity.max.compareTo(current.element) >= 0 || leftValidity.height != ((Entry<T>) current.left).height) {
                 return new VerifyRetValues(false, leftValidity.height, leftValidity.min, leftValidity.max);
             }
@@ -275,6 +289,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
         //verify right subtree
         if (current.right != null) {
             rightValidity = verify((Entry<T>) current.right);
+            rmax=rightValidity.max;
+            rHeight= rightValidity.height;
             if (!rightValidity.flag || rightValidity.max.compareTo(current.element) <= 0 || rightValidity.height != ((Entry<T>) current.right).height) {
                 return new VerifyRetValues(false, rightValidity.height, rightValidity.min, rightValidity.max);
             }
@@ -282,17 +298,15 @@ public class AVLTree<T extends Comparable<? super T>> extends BinarySearchTree<T
         //verify height balance
         if (Math.abs((leftValidity == null ? -1 : leftValidity.height) - (rightValidity == null ? -1 : rightValidity.height)) > 1) {
             return new VerifyRetValues(false,
-                    Math.max(leftValidity == null ? -1 : leftValidity.height,
-                            rightValidity == null ? -1 : rightValidity.height) + 1,
-                    current.element,
-                    current.element);
+                    Math.max(lHeight,rHeight) + 1,
+                    lmin,
+                    rmax);
         }
 
         return new VerifyRetValues(true,
-                Math.max(leftValidity == null ? -1 : leftValidity.height,
-                        rightValidity == null ? -1 : rightValidity.height) + 1,
-                current.element,
-                current.element);
+                Math.max(lHeight,rHeight) + 1,
+                lmin,
+                rmax);
     }
 }
 
